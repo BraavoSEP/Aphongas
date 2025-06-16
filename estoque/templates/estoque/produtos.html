@@ -1,23 +1,64 @@
 {% extends 'estoque/base.html' %}
+{% load widget_tweaks %}
 {% block conteudo %}
-<h2>Produtos</h2>
-<form method="post" class="mb-4">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-success">Salvar</button>
-</form>
-<table class="table table-striped">
-  <thead><tr><th>ID</th><th>Descrição</th><th>Unidade</th><th>Fornecedor</th><th>Depósito Padrão</th></tr></thead>
-  <tbody>
-    {% for produto in produtos %}
-    <tr>
-      <td>{{ produto.id }}</td>
-      <td>{{ produto.descricao }}</td>
-      <td>{{ produto.get_unidade_display }}</td>
-      <td>{{ produto.fornecedor.nome }}</td>
-      <td>{{ produto.deposito_padrao.descricao }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title mb-0">
+                    <i class="fas fa-box me-2"></i>Produtos
+                </h2>
+            </div>
+            <div class="card-body">
+                <form method="post" class="mb-4">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field.errors }}
+                            {{ field|add_class:"form-control" }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i>Salvar
+                    </button>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Descrição</th>
+                                <th>Unidade</th>
+                                <th>Fornecedor</th>
+                                <th>Depósito Padrão</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produto in produtos %}
+                            <tr class="animate__animated animate__fadeIn">
+                                <td>{{ produto.id }}</td>
+                                <td>{{ produto.descricao }}</td>
+                                <td>{{ produto.get_unidade_display }}</td>
+                                <td>{{ produto.fornecedor.nome }}</td>
+                                <td>{{ produto.deposito_padrao.descricao }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">Nenhum produto cadastrado.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %} 

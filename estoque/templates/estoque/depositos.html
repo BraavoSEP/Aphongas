@@ -1,21 +1,60 @@
 {% extends 'estoque/base.html' %}
+{% load widget_tweaks %}
 {% block conteudo %}
-<h2>Depósitos</h2>
-<form method="post" class="mb-4">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-success">Salvar</button>
-</form>
-<table class="table table-striped">
-  <thead><tr><th>ID</th><th>Descrição</th><th>Endereço</th></tr></thead>
-  <tbody>
-    {% for deposito in depositos %}
-    <tr>
-      <td>{{ deposito.id }}</td>
-      <td>{{ deposito.descricao }}</td>
-      <td>{{ deposito.endereco }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h2 class="card-title mb-0">
+                    <i class="fas fa-warehouse me-2"></i>Depósitos
+                </h2>
+            </div>
+            <div class="card-body">
+                <form method="post" class="mb-4">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field.errors }}
+                            {{ field|add_class:"form-control" }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i>Salvar
+                    </button>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Descrição</th>
+                                <th>Endereço</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for deposito in depositos %}
+                            <tr class="animate__animated animate__fadeIn">
+                                <td>{{ deposito.id }}</td>
+                                <td>{{ deposito.descricao }}</td>
+                                <td>{{ deposito.endereco }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center">Nenhum depósito cadastrado.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %} 

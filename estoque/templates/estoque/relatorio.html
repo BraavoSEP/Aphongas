@@ -1,17 +1,42 @@
 {% extends 'estoque/base.html' %}
 {% block conteudo %}
-<h2>Relatório de Estoque</h2>
-<table class="table table-bordered">
-  <thead><tr><th>Produto</th><th>Entrada</th><th>Saída</th><th>Saldo</th></tr></thead>
-  <tbody>
-    {% for item in relatorio %}
-    <tr>
-      <td>{{ item.produto.descricao }}</td>
-      <td>{{ item.entrada }}</td>
-      <td>{{ item.saida }}</td>
-      <td>{{ item.saldo }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-purple text-white" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                <h2 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>Relatório de Estoque
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Produto</th>
+                                <th class="text-success">Entrada</th>
+                                <th class="text-danger">Saída</th>
+                                <th class="text-primary">Saldo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in relatorio %}
+                            <tr class="animate__animated animate__fadeIn">
+                                <td>{{ item.produto.descricao }}</td>
+                                <td class="text-success">{{ item.entrada }}</td>
+                                <td class="text-danger">{{ item.saida }}</td>
+                                <td class="text-primary fw-bold">{{ item.saldo }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">Nenhum movimento registrado.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %} 
