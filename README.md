@@ -19,7 +19,7 @@ Sistema de controle de estoque para pequenas empresas de distribuição de água
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seuusuario/Aphongas.git
+   git clone https://github.com/BraavoSEP/Aphongas.git
    cd Aphongas
    ```
 
