@@ -1,0 +1,9 @@
+{% extends 'estoque/base.html' %}
+{% block conteudo %}
+<h2>Movimentação de Produtos</h2>
+<form method="post" class="mb-4">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-success">Salvar</button>
+</form>
+{% endblock %} 

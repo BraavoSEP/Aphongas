@@ -1,0 +1,23 @@
+{% extends 'estoque/base.html' %}
+{% block conteudo %}
+<h2>Produtos</h2>
+<form method="post" class="mb-4">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-success">Salvar</button>
+</form>
+<table class="table table-striped">
+  <thead><tr><th>ID</th><th>Descrição</th><th>Unidade</th><th>Fornecedor</th><th>Depósito Padrão</th></tr></thead>
+  <tbody>
+    {% for produto in produtos %}
+    <tr>
+      <td>{{ produto.id }}</td>
+      <td>{{ produto.descricao }}</td>
+      <td>{{ produto.get_unidade_display }}</td>
+      <td>{{ produto.fornecedor.nome }}</td>
+      <td>{{ produto.deposito_padrao.descricao }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %} 
